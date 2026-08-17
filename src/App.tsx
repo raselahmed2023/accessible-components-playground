@@ -1,122 +1,100 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useRef, useState } from "react";
+import "./App.css";
+
+import Modal from "./playground/Modal";
+import Tabs from "./playground/Tabs";
+import Disclosure from "./playground/Disclosure";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [modalOpen, setModalOpen] =
+    useState(false);
+
+  const modalTriggerRef =
+    useRef<HTMLButtonElement>(null);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <main className="page">
+      <header className="page-header">
+        <p className="eyebrow">FE-05</p>
+
+        <h1>
+          Accessible Component Playground
+        </h1>
+
+        <p>
+          Modal, tabs and disclosure components built
+          from scratch using React, TypeScript and
+          WAI-ARIA interaction patterns.
+        </p>
+      </header>
+
+      <section className="component-card">
+        <div className="section-heading">
+          <span>01</span>
+
+          <div>
+            <h2>Modal Dialog</h2>
+            <p>
+              Focus trapping, Escape support and focus
+              restoration.
+            </p>
+          </div>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
+
         <button
+          ref={modalTriggerRef}
           type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          onClick={() => setModalOpen(true)}
         >
-          Count is {count}
+          Open modal
         </button>
+
+        <Modal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          title="Accessible modal dialog"
+          triggerRef={modalTriggerRef}
+        >
+          <p>
+            Use Tab and Shift + Tab to move between
+            controls. Press Escape to close the dialog.
+          </p>
+        </Modal>
       </section>
 
-      <div className="ticks"></div>
+      <section className="component-card">
+        <div className="section-heading">
+          <span>02</span>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+          <div>
+            <h2>Tabs</h2>
+            <p>
+              Navigate using Left/Right arrows, Home and
+              End.
+            </p>
+          </div>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
+
+        <Tabs />
       </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <section className="component-card">
+        <div className="section-heading">
+          <span>03</span>
+
+          <div>
+            <h2>Disclosure</h2>
+            <p>
+              Toggle content using a native accessible
+              button.
+            </p>
+          </div>
+        </div>
+
+        <Disclosure />
+      </section>
+    </main>
+  );
 }
 
-export default App
+export default App;
